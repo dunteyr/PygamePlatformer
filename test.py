@@ -3,6 +3,8 @@ from pygame.locals import *
 
 vec = pygame.math.Vector2
 
-vector = vec(10, 20)
+list1 = [0, 1, 2, 3]
+list2 = [4, 5, 6, 7]
+list3 = list1 + list2
 
-print(vector[0])
+print(list3)

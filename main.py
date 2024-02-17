@@ -23,11 +23,16 @@ allSprites.add(floor)
 platforms = pygame.sprite.Group()
 platforms.add(floor)
 
+player.addCollisionGroup(platforms)
+
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             exit()
+        # if event.type == KEYDOWN:
+        #     if event.key == pygame.K_SPACE:
+        #         player.jump()
 
     displaysurface.fill((0,0,0))
 
