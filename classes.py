@@ -63,7 +63,8 @@ class Player(pygame.sprite.Sprite):
                     self.pos.y = collisions[0].rect.top
                     self.vel.y = 2.3
                     self.landed = True
-
+        else:
+            self.landed = False
         self.rect.midbottom = self.pos
 
     def update(self):
