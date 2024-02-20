@@ -12,9 +12,11 @@ class Player(pygame.sprite.Sprite):
         self.isDead = False
         self.collisionGroups = []
 
+        self.maxFall = 13.0
         self.acceleration = 0.5
         self.friction = -0.12
         self.jumpAmt = -15
+        self.landed = False
 
         self.pos = vec(x, y)
         self.acc = vec(0, 0)
@@ -48,15 +50,19 @@ class Player(pygame.sprite.Sprite):
 
         self.acc.x += self.vel.x * self.friction
         self.vel += self.acc
+        if self.vel.y >= self.maxFall:
+            self.vel.y = self.maxFall
+            print(self.vel.y)
         self.pos += self.vel + 0.5 * self.acc
 
         #this is a hacky way to handle floor collision for now
         if collisions:
-            self.pos.y = collisions[0].rect.top
-
             #without this if jumping velocity will be reset
             if self.vel.y > 0:
-                self.vel.y = 0
+                if self.pos.y < collisions[0].rect.bottom:
+                    self.pos.y = collisions[0].rect.top
+                    self.vel.y = 2.3
+                    self.landed = True
 
         self.rect.midbottom = self.pos
 
@@ -76,9 +82,9 @@ class Player(pygame.sprite.Sprite):
         return collisions
 
     def jump(self):
-        collisions = self.getCollisions()
-        if collisions:
+        if self.landed:
             self.vel.y = self.jumpAmt
+            self.landed = False
 
     def kill(self):
 
