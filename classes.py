@@ -50,9 +50,9 @@ class Player(pygame.sprite.Sprite):
 
         self.acc.x += self.vel.x * self.friction
         self.vel += self.acc
+        #dont let player go too fast or he'll go through platforms
         if self.vel.y >= self.maxFall:
             self.vel.y = self.maxFall
-            print(self.vel.y)
         self.pos += self.vel + 0.5 * self.acc
 
         #this is a hacky way to handle floor collision for now

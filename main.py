@@ -11,7 +11,7 @@ WIDTH = 800
 FPS = 60
 screenVel = 1
  
-FramePerSec = pygame.time.Clock()
+clock = pygame.time.Clock()
  
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Game")
@@ -65,13 +65,16 @@ while True:
             
     player.move()
 
+    #handle score
+
     #handle player death
     if player.rect.bottom >= HEIGHT:
         player.rect.bottom = HEIGHT - 10
         player.kill()
 
+    #draw all sprites
     for entity in allSprites:
         displaysurface.blit(entity.surf, entity.rect)
 
     pygame.display.update()
-    FramePerSec.tick(FPS)
+    clock.tick(FPS)
