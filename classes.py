@@ -17,6 +17,7 @@ class Player(pygame.sprite.Sprite):
         self.friction = -0.12
         self.jumpAmt = -15
         self.landed = False
+        self.jumping = False
 
         self.pos = vec(x, y)
         self.acc = vec(0, 0)
@@ -47,6 +48,8 @@ class Player(pygame.sprite.Sprite):
 
             if pressedKeys[K_SPACE]:
                 self.jump()
+            if not pressedKeys[K_SPACE]:
+                self.cancelJump()
 
         self.acc.x += self.vel.x * self.friction
         self.vel += self.acc
@@ -63,6 +66,7 @@ class Player(pygame.sprite.Sprite):
                     self.pos.y = collisions[0].rect.top
                     self.vel.y = 2.3
                     self.landed = True
+                    self.jumping = False
         else:
             self.landed = False
         self.rect.midbottom = self.pos
@@ -86,6 +90,13 @@ class Player(pygame.sprite.Sprite):
         if self.landed:
             self.vel.y = self.jumpAmt
             self.landed = False
+            self.jumping = True
+
+    def cancelJump(self):
+        if self.jumping:
+            if self.vel.y < -5:
+                self.vel.y = -5
+                self.jumping = False
 
     def kill(self):
 
